@@ -2,9 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8"/>
-    <title></title>
+    <title>Coding Events</title>
 </head>
 <body>
+<h1>All Events</h1>
+<p th:unless="${events} and ${events.size()}">No events!</p>
 <th:block th:each="event : ${events}">
     <p th:text="${event}">Events go here!</p>
 </th:block>
