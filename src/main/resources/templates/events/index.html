@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+<th:block th:each="event : ${events}">
+    <p th:text="${event}">Events go here!</p>
+</th:block>
+</body>
+</html>
