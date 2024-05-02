@@ -10,11 +10,16 @@
     <thead>
         <tr>
             <th>Event Name</th>
+            <th>Event Description</th>
         </tr>
     </thead>
-    <tr th:each="event : ${events}">
-        <td th:text="${event}">Events go here!</td>
-    </tr>
+    <tbody>
+        <tr th:each="event : ${events}">
+            <td th:text="${event.getKey()}">Events go here!</td>
+            <td th:text="${event.getValue()}">Description here</td>
+            <td th:replace="~{fragments :: address}"></td>
+        </tr>
+    </tbody>
 </table>
 </body>
 </html>
