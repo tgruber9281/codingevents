@@ -22,7 +22,7 @@ public class EventController {
 //        events.add("Easter Eggstravaganza");
 //        events.add("Christmas");
 //
-    @GetMapping("/")
+    @GetMapping
     public String displayAllEvents(Model model) {
         
         model.addAttribute("events", events);
@@ -36,6 +36,6 @@ public class EventController {
     @PostMapping("create")
     public String createEvent(@RequestParam String eventName){
         events.add(eventName);
-        return "redirect:";
+        return "redirect:/events";
     }
 }
