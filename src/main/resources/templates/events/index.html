@@ -11,14 +11,16 @@
         <tr>
             <th>Event Name</th>
             <th>Event Description</th>
-            <th>Event Address</th>
+<!--            <th>Event Address</th>-->
+            <th>Event ID</th>
         </tr>
     </thead>
     <tbody>
         <tr th:each="event : ${events}">
-            <td th:text="${event.getKey()}">Events go here!</td>
-            <td th:text="${event.getValue()}">Description here</td>
-            <td th:replace="~{fragments :: address}"></td>
+            <td th:text="${event.name}">Events go here!</td>
+            <td th:text="${event.description}">Description here</td>
+<!--            <td th:replace="~{fragments :: address}"></td>-->
+            <td th:text="${event.id}"></td>
         </tr>
     </tbody>
 </table>

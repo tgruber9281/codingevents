@@ -1,5 +1,6 @@
 package com.launchcode.codingevents.controllers;
 
+import com.launchcode.codingevents.models.Event;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +18,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("events")
 public class EventController {
-    private HashMap<String,String> events = new HashMap<>();
+    private ArrayList<Event> events = new ArrayList<>();
     
     @GetMapping
     public String displayAllEvents(Model model) {
@@ -30,7 +32,7 @@ public class EventController {
     }
     @PostMapping("create")
     public String createEvent(@RequestParam String eventName, @RequestParam String eventDesc){
-        events.put(eventName, eventDesc);
+        events.add(new Event(eventName, eventDesc));
         return "redirect:/events";
     }
 }
