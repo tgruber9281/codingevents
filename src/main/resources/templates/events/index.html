@@ -13,6 +13,7 @@
             <th>Event Description</th>
 <!--            <th>Event Address</th>-->
             <th>Event ID</th>
+            <th>Edit Event</th>
         </tr>
     </thead>
     <tbody>
@@ -21,6 +22,9 @@
             <td th:text="${event.description}">Description here</td>
 <!--            <td th:replace="~{fragments :: address}"></td>-->
             <td th:text="${event.id}"></td>
+            <td>
+                <a th:href="@{/events/edit/{id}(id=${event.id})}">Edit</a>
+            </td>
         </tr>
     </tbody>
 </table>
