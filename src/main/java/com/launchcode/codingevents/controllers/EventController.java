@@ -2,6 +2,7 @@ package com.launchcode.codingevents.controllers;
 
 import com.launchcode.codingevents.data.EventData;
 import com.launchcode.codingevents.models.Event;
+import com.launchcode.codingevents.models.EventType;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +26,8 @@ public class EventController {
     @GetMapping("create")
     public String renderCreateEventForm(Model model){
         model.addAttribute("title","Create Event");
-        model.addAttribute("event", new Event());
+        model.addAttribute(new Event());
+        model.addAttribute("types", EventType.values());
         return "events/create";
     }
     @PostMapping("create")
@@ -61,9 +63,10 @@ public class EventController {
         model.addAttribute("event", eventToEdit);
         String title = "Edit Event " + eventToEdit.getName() + " (id=" + eventToEdit.getId() + ")";
         model.addAttribute("title", title );
+        model.addAttribute("types", EventType.values());
         return "events/edit";
     }
-    //TODO figure out how to make the edit event not increment the id
+    //TODO figure out how to make the edit event not increment the id (add id setter?)
     @PostMapping("edit")
     public String processEditForm(@ModelAttribute @Valid Event event, Errors errors,
                                   Model model) {
