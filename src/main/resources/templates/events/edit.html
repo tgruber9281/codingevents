@@ -6,18 +6,26 @@
 <nav th:replace="~{fragments :: navigation}"></nav>
 
 <form method="post" action="/events/edit">
-    <input type="hidden" th:value="${event.id}" name="eventId" />
+    <input type="hidden" th:field="${event.id}" />
     <div class="form-group">
         <label>Name
-            <input type="text" name="name" th:value="${event.name}" class="form-control"/>
+            <input th:field="${event.name}" class="form-control"/>
         </label>
+        <p th:errors="${event.name}" class="error"></p>
     </div>
     <div class="form-group">
         <label>Description
-            <textarea name="description" th:text="${event.description}" id="description" cols="30"
+            <textarea th:field="${event.description}" cols="30"
                       rows="10"
                       class="form-control"></textarea>
         </label>
+        <p th:errors="${event.description}" class="error"></p>
+    </div>
+    <div class="form-group">
+        <label>Contact Email
+            <input th:field="${event.contactEmail}" class="form-control" />
+        </label>
+        <p th:errors="${event.contactEmail}" class="error"></p>
     </div>
     <div class="form-group">
         <input type="submit" value="Edit Event" class="btn btn-success" />
