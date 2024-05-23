@@ -69,13 +69,13 @@ public class EventController {
     //TODO figure out how to make the edit event not increment the id (add id setter?)
     @PostMapping("edit")
     public String processEditForm(@ModelAttribute @Valid Event event, Errors errors,
-                                  Model model) {
+                                  Model model, int id) {
         if (errors.hasErrors()){
             String title = "Edit Event " + event.getName() + " (id=" + event.getId() + ")";
             model.addAttribute("title", title );
             return "events/edit";
         }
-        Event eventToEdit = EventData.getById(event.getId());
+        Event eventToEdit = EventData.getById(id);
         eventToEdit.setName(event.getName());
         eventToEdit.setDescription(event.getDescription());
         eventToEdit.setContactEmail(event.getContactEmail());

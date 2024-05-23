@@ -1,9 +1,6 @@
 package com.launchcode.codingevents.models;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.util.Objects;
 
@@ -24,13 +21,18 @@ public class Event {
     private String contactEmail;
     @NotNull
     private EventType type;
+    @NotBlank
+    private String location;
+    @AssertTrue
     
-    public Event(String name, String description, String contactEmail, EventType type) {
+    public Event(String name, String description, String contactEmail, EventType type, String location) {
         this();
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
         this.type = type;
+        this.location = location;
+        
     }
     
     public Event() {
@@ -65,13 +67,21 @@ public class Event {
     public int getId() {
         return id;
     }
-    
+   
     public @NotNull EventType getType() {
         return type;
     }
     
     public void setType(@NotNull EventType type) {
         this.type = type;
+    }
+    
+    public @NotBlank String getLocation() {
+        return location;
+    }
+    
+    public void setLocation(@NotBlank String location) {
+        this.location = location;
     }
     
     @Override
