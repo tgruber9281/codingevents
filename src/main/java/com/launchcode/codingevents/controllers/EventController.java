@@ -1,13 +1,16 @@
 package com.launchcode.codingevents.controllers;
 
-import com.launchcode.codingevents.data.EventData;
+import com.launchcode.codingevents.data.EventRepository;
 import com.launchcode.codingevents.models.Event;
 import com.launchcode.codingevents.models.EventType;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * Created by Trevor Gruber
@@ -16,10 +19,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("events")
 public class EventController {
     
+    @Autowired
+    private EventRepository eventRepository;
+    
+    //findAll, save, findById
+    
     @GetMapping
     public String displayAllEvents(Model model) {
         model.addAttribute("title","Coding Events");
-        model.addAttribute("events", EventData.getAll());
+        model.addAttribute("events", eventRepository.findAll());
         return "events/index";
     }
     
@@ -37,14 +45,14 @@ public class EventController {
             model.addAttribute("title","Create Event");
             return "events/create";
         }
-        EventData.add(newEvent);
+        eventRepository.save(newEvent);
         return "redirect:/events";
     }
     
     @GetMapping("delete")
     public String displayDeleteEventForm(Model model) {
         model.addAttribute("title","Delete Events");
-        model.addAttribute("events",EventData.getAll());
+        model.addAttribute("events", eventRepository.findAll());
         return "events/delete";
     }
     
@@ -52,17 +60,25 @@ public class EventController {
     public String processDeleteEventForm(@RequestParam(required = false) int[] eventIds){
         if (eventIds != null) {
             for (int id : eventIds) {
-                EventData.remove(id);
+                eventRepository.deleteById(id);
             }
         }
         return "redirect:/events";
     }
     @GetMapping("edit/{eventId}")
     public String displayEditForm(Model model, @PathVariable int eventId) {
-        Event eventToEdit = EventData.getById(eventId);
-        model.addAttribute("event", eventToEdit);
-        String title = "Edit Event " + eventToEdit.getName() + " (id=" + eventToEdit.getId() + ")";
-        model.addAttribute("title", title );
+        Optional<Event> result = eventRepository.findById(eventId);
+        if (result.isEmpty()){
+        
+        } else {
+            Event eventToEdit = result.get();
+            String title =
+                    "Edit Event " + eventToEdit.getName() + " (id=" + eventToEdit.getId() +
+                            ")";
+            model.addAttribute("event", eventToEdit);
+            model.addAttribute("title", title );
+        }
+        
         model.addAttribute("types", EventType.values());
         return "events/edit";
     }
@@ -75,10 +91,17 @@ public class EventController {
             model.addAttribute("title", title );
             return "events/edit";
         }
-        Event eventToEdit = EventData.getById(id);
-        eventToEdit.setName(event.getName());
-        eventToEdit.setDescription(event.getDescription());
-        eventToEdit.setContactEmail(event.getContactEmail());
+        Optional<Event> result = eventRepository.findById(id);
+        if (result.isEmpty()){
+        
+        } else {
+            Event eventToEdit = result.get();
+            eventToEdit.setName(event.getName());
+            eventToEdit.setDescription(event.getDescription());
+            eventToEdit.setContactEmail(event.getContactEmail());
+            eventToEdit.setType(event.getType());
+            eventRepository.save(eventToEdit);
+        }
         return "redirect:/events";
     }
 }

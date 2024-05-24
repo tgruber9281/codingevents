@@ -1,44 +1,48 @@
 package com.launchcode.codingevents.models;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
+import jakarta.persistence.Entity;
 
 import java.util.Objects;
 
 /**
  * Created by Trevor Gruber
  */
+@Entity
 public class Event {
+    
+    @Id
+    @GeneratedValue
     private int id;
-    private static int nextId = 1;
     
     @NotBlank(message = "Name is required")
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     private String name;
+    
     @Size(max = 500, message = "Description cannot be more than 500 characters")
     private String description;
+    
     @Email(message = "Please enter a valid email address")
     @NotBlank(message = "Email is required")
     private String contactEmail;
-    @NotNull
+    
+//    @NotNull
     private EventType type;
-    @NotBlank
-    private String location;
-    @AssertTrue
+    
+//    @NotBlank
+//    private String location;
     
     public Event(String name, String description, String contactEmail, EventType type, String location) {
-        this();
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
         this.type = type;
-        this.location = location;
-        
+//        this.location = location;
     }
     
-    public Event() {
-        this.id = nextId;
-        nextId++;
-    }
+    public Event() {    }
     
     public String getName() {
         return name;
@@ -76,13 +80,13 @@ public class Event {
         this.type = type;
     }
     
-    public @NotBlank String getLocation() {
-        return location;
-    }
+//    public @NotBlank String getLocation() {
+//        return location;
+//    }
     
-    public void setLocation(@NotBlank String location) {
-        this.location = location;
-    }
+//    public void setLocation(@NotBlank String location) {
+//        this.location = location;
+//    }
     
     @Override
     public String toString() {
