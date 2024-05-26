@@ -39,10 +39,11 @@ public class EventController {
         return "events/create";
     }
     @PostMapping("create")
-    public String processCreateEventForm(@ModelAttribute @Valid Event newEvent, Errors error,
+    public String processCreateEventForm(@ModelAttribute @Valid Event newEvent, Errors errors,
                                          Model model){
-        if (error.hasErrors()){
+        if (errors.hasErrors()){
             model.addAttribute("title","Create Event");
+            model.addAttribute(new Event());
             return "events/create";
         }
         eventRepository.save(newEvent);
