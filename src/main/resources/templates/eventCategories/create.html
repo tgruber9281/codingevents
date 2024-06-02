@@ -8,9 +8,9 @@
     <form action="/eventCategories/create" method="post">
         <div class="form-group">
             <label>Category Name
-                <input type="text" th:field="${category.name}" class="form-control">
+                <input th:field="${eventCategory.name}" class="form-control">
             </label>
-            <p th:errors="${category.name}" class="error"></p>
+                <p th:errors="${eventCategory.name}" class="error"></p>
         </div>
         <div class="form-control">
             <input type="submit" value="Create Event Category" class="btn btn-success">

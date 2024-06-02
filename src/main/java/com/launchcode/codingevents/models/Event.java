@@ -1,89 +1,74 @@
 package com.launchcode.codingevents.models;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.*;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-
-import java.util.Objects;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 /**
  * Created by Trevor Gruber
  */
 @Entity
-public class Event {
-    
-    @Id
-    @GeneratedValue
-    private int id;
+public class Event extends AbstractEntity {
     
     @NotBlank(message = "Name is required")
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     private String name;
     
-    @Size(max = 500, message = "Description cannot be more than 500 characters")
-    private String description;
+    @OneToOne(cascade = CascadeType.ALL)
+    @Valid
+    @NotNull
+    private EventDetails eventDetails;
     
-    @Email(message = "Please enter a valid email address")
-    @NotBlank(message = "Email is required")
-    private String contactEmail;
-    
-//    @NotNull
-    private EventType type;
-    
+    @ManyToOne
+    @NotNull(message = "Category is required")
+    private EventCategory eventCategory;
+
 //    @NotBlank
 //    private String location;
     
-    public Event(String name, String description, String contactEmail, EventType type, String location) {
+    public Event(String name, String description, String contactEmail, EventCategory eventCategory,
+                 String location) {
         this.name = name;
-        this.description = description;
-        this.contactEmail = contactEmail;
-        this.type = type;
+        this.eventCategory = eventCategory;
 //        this.location = location;
     }
     
-    public Event() {    }
+    public Event() {
+    }
     
-    public String getName() {
+    public @NotBlank(message = "Name is required") @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters") String getName() {
         return name;
     }
     
-    public void setName(String name) {
+    public void setName(@NotBlank(message = "Name is required") @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters") String name) {
         this.name = name;
     }
     
-    public String getDescription() {
-        return description;
+    public @NotNull(message = "Category is required") EventCategory getEventCategory() {
+        return eventCategory;
     }
     
-    public void setDescription(String description) {
-        this.description = description;
+    public void setEventCategory(@NotNull(message = "Category is required") EventCategory eventCategory) {
+        this.eventCategory = eventCategory;
     }
     
-    public String getContactEmail() {
-        return contactEmail;
+    public EventDetails getEventDetails() {
+        return eventDetails;
     }
     
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
+    public void setEventDetails(EventDetails eventDetails) {
+        this.eventDetails = eventDetails;
     }
     
-    public int getId() {
-        return id;
-    }
-   
-    public @NotNull EventType getType() {
-        return type;
-    }
-    
-    public void setType(@NotNull EventType type) {
-        this.type = type;
-    }
-    
-//    public @NotBlank String getLocation() {
+    //    public @NotBlank String getLocation() {
 //        return location;
 //    }
-    
+
 //    public void setLocation(@NotBlank String location) {
 //        this.location = location;
 //    }
@@ -91,18 +76,5 @@ public class Event {
     @Override
     public String toString() {
         return name;
-    }
-    
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Event event = (Event) o;
-        return id == event.id;
-    }
-    
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
     }
 }

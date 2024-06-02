@@ -9,10 +9,10 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Event ID</th>
-            <th>Event Name</th>
-            <th>Event Description</th>
-            <th>Event Type</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Category</th>
             <th>Contact Email</th>
             <th>Edit Event</th>
         </tr>
@@ -21,9 +21,9 @@
         <tr th:each="event : ${events}">
             <td th:text="${event.id}"></td>
             <td th:text="${event.name}">Events go here!</td>
-            <td th:text="${event.description}">Description here</td>
-            <td th:text="${event.type.displayName}"></td>
-            <td th:text="${event.contactEmail}"></td>
+            <td th:text="${event.eventDetails.description}">Description here</td>
+            <td th:text="${event.eventCategory.name}"></td>
+            <td th:text="${event.eventDetails.contactEmail}"></td>
             <td>
                 <a th:href="@{/events/edit/{id}(id=${event.id})}">Edit</a>
             </td>

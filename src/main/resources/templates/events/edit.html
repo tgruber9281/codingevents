@@ -15,26 +15,26 @@
     </div>
     <div class="form-group">
         <label>Description
-            <textarea th:field="${event.description}" cols="30"
+            <textarea th:field="${event.eventDetails.description}" cols="30"
                       rows="10"
                       class="form-control"></textarea>
         </label>
-        <p th:errors="${event.description}" class="error"></p>
+        <p th:errors="${event.eventDetails.description}" class="error"></p>
     </div>
     <div class="form-group">
         <label>Contact Email
-            <input th:field="${event.contactEmail}" class="form-control" />
+            <input th:field="${event.eventDetails.contactEmail}" class="form-control" />
         </label>
-        <p th:errors="${event.contactEmail}" class="error"></p>
+        <p th:errors="${event.eventDetails.contactEmail}" class="error"></p>
     </div>
     <div class="form-group">
         <label>Type
-            <select th:field="${event.type}">
-                <option th:each="type : ${types}" th:value="${type}"
-                        th:text="${type.displayName}"></option>
+            <select th:field="${event.eventCategory}">
+                <option th:each="eventCategory : ${categories}" th:value="${eventCategory.id}"
+                        th:text="${eventCategory.name}"></option>
             </select>
         </label>
-        <p th:errors="${event.type}" class="error"></p>
+        <p th:errors="${event.eventCategory}" class="error"></p>
     </div>
     <div class="form-group">
         <input type="submit" value="Edit Event" class="btn btn-success" />

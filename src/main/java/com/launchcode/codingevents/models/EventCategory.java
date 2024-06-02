@@ -1,65 +1,54 @@
 package com.launchcode.codingevents.models;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Trevor Gruber
  */
 @Entity
-public class EventCategory {
+public class EventCategory extends AbstractEntity {
 
-/** fields */
-    @Id
-    @GeneratedValue
-    private int id;
-    
-    @Size(min=3, message="Name must be at least 3 characters long")
+    /** fields */
+
+    @NotBlank(message = "Name is required")
+    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     private String name;
     
-/** Constructor(s) */
-    public EventCategory(@Size(min = 3, message = "Name must be at least 3 characters long") String name) {
+    @OneToMany(mappedBy = "eventCategory")
+    private final List<Event> events = new ArrayList<>();
+    
+    /** Constructor(s) */
+    public EventCategory(String name) {
         this.name = name;
     }
     
     public EventCategory() {}
     
-/** Custom methods */
+    /** Custom methods */
+    
 
-/** Getters and Setters */
-    public String getName() {
+    /** Getters and Setters */
+    public @NotBlank(message = "Name is required") @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters") String getName() {
         return name;
     }
     
-    public void setName(@Size(min = 3, message = "Name must be at least 3 characters long") String name) {
+    public void setName(@NotBlank(message = "Name is required") @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters") String name) {
         this.name = name;
     }
     
-    public int getId() {
-        return id;
+    public List<Event> getEvents() {
+        return events;
     }
     
-/** toString */
+    /** toString */
     @Override
     public String toString() {
         return name;
-    }
-
-/** Equals and Hashcode*/
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EventCategory that = (EventCategory) o;
-        return id == that.id;
-    }
-    
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }
