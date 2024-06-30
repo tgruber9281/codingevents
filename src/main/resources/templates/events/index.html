@@ -25,7 +25,7 @@
             <td th:text="${event.eventCategory.name}"></td>
             <td th:text="${event.eventDetails.contactEmail}"></td>
             <td>
-                <a th:href="@{/events/edit/{id}(id=${event.id})}">Edit</a>
+                <a th:href="'/events/edit?eventId=' + ${event.id}">Edit</a>
             </td>
         </tr>
     </tbody>

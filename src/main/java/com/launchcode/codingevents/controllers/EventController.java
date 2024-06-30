@@ -4,6 +4,9 @@ import com.launchcode.codingevents.data.EventCategoryRepository;
 import com.launchcode.codingevents.data.EventRepository;
 import com.launchcode.codingevents.models.Event;
 import com.launchcode.codingevents.models.EventCategory;
+import com.launchcode.codingevents.models.User;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,12 +16,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+
 /**
  * Created by Trevor Gruber
  */
 @Controller
 @RequestMapping("events")
 public class EventController {
+    
+    @Autowired
+    AuthenticationController authenticationController;
     
     @Autowired
     private EventRepository eventRepository;
@@ -31,6 +38,7 @@ public class EventController {
     @GetMapping
     public String displayAllEvents(@RequestParam(required = false) Integer categoryId,
                                    Model model) {
+        model.addAttribute("loggedInUser", authenticationController.getLoggedInUser().getId());
         if (categoryId == null) {
             model.addAttribute("title", "Coding Events");
             model.addAttribute("events", eventRepository.findAll());
@@ -49,6 +57,7 @@ public class EventController {
     
     @GetMapping("create")
     public String renderCreateEventForm(Model model){
+        model.addAttribute("loggedInUser", authenticationController.getLoggedInUser().getId());
         model.addAttribute("title","Create Event");
         model.addAttribute(new Event());
         model.addAttribute("categories", eventCategoryRepository.findAll());
@@ -57,6 +66,7 @@ public class EventController {
     @PostMapping("create")
     public String processCreateEventForm(@ModelAttribute @Valid Event newEvent, Errors errors,
                                          Model model){
+        model.addAttribute("loggedInUser", authenticationController.getLoggedInUser().getId());
         if (errors.hasErrors()){
             model.addAttribute("title","Create Event");
             model.addAttribute("categories", eventCategoryRepository.findAll());
@@ -68,6 +78,7 @@ public class EventController {
     
     @GetMapping("delete")
     public String displayDeleteEventForm(Model model) {
+        model.addAttribute("loggedInUser", authenticationController.getLoggedInUser().getId());
         model.addAttribute("title","Delete Events");
         model.addAttribute("events", eventRepository.findAll());
         return "events/delete";
@@ -82,8 +93,9 @@ public class EventController {
         }
         return "redirect:/events";
     }
-    @GetMapping("edit/{eventId}")
-    public String displayEditForm(Model model, @PathVariable int eventId) {
+    @GetMapping("edit")
+    public String displayEditForm(Model model, @RequestParam int eventId) {
+        model.addAttribute("loggedInUser", authenticationController.getLoggedInUser().getId());
         Optional<Event> result = eventRepository.findById(eventId);
         if (result.isEmpty()){
         
@@ -99,10 +111,10 @@ public class EventController {
         model.addAttribute("categories", eventCategoryRepository.findAll());
         return "events/edit";
     }
-    //TODO figure out how to make the edit event not increment the id (add id setter?)
     @PostMapping("edit")
     public String processEditForm(@ModelAttribute @Valid Event event, Errors errors,
                                   Model model, int id) {
+        model.addAttribute("loggedInUser", authenticationController.getLoggedInUser().getId());
         if (errors.hasErrors()){
             String title = "Edit Event " + event.getName() + " (id=" + event.getId() + ")";
             model.addAttribute("title", title );

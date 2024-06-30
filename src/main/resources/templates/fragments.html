@@ -22,6 +22,11 @@
         <li class="nav-item"><a class="nav-link" href="/events/delete">Delete Event</a></li>
         <li class="nav-item"><a class="nav-link" href="/eventCategories">All Categories</a></li>
         <li class="nav-item"><a class="nav-link" href="/eventCategories/create">Create Category</a></li>
+        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+        <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+        <li class="nav-item"><a class="nav-link"
+                                th:href="'/user/profile?id=' + ${loggedInUser}">View
+            Profile</a></li>
     </ul>
 </nav>
 

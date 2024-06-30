@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}"></head>
+<body class="container">
+
+<h1>Create User</h1>
+<nav th:replace="~{fragments :: navigation}"></nav>
+
+<form method="post">
+    <div class="form-group">
+        <label>Username
+            <input class="form-control" th:field="${registrationFormDTO.username}" />
+        </label>
+        <p class="error" th:errors="${registrationFormDTO.username}"></p>
+    </div>
+    <div class="form-group">
+        <label>Password
+            <input class="form-control" th:field="${registrationFormDTO.password}"
+                   type="password" />
+        </label>
+        <p class="error" th:errors="${registrationFormDTO.password}"></p>
+    </div>
+    <div class="form-group">
+        <label>Verify Password
+            <input class="form-control" th:field="${registrationFormDTO.verifyPassword}"
+                   type="password" />
+        </label>
+    </div>
+    <div class="form-group">
+        <label>First Name:
+            <input type="text" th:field="${registrationFormDTO.userDetails.firstName}" class="form-control">
+        </label>
+        <p th:errors="${registrationFormDTO.userDetails.firstName}" class="error"></p>
+    </div>
+    <div class="form-group">
+        <label>Last Name:
+            <input type="text" th:field="${registrationFormDTO.userDetails.lastName}" class="form-control">
+        </label>
+        <p th:errors="${registrationFormDTO.userDetails.lastName}" class="error"></p>
+    </div>
+    <div class="form-group">
+        <label>Display Name (if left blank, your first and last name will be used):
+            <input type="text" th:field="${registrationFormDTO.userDetails.displayName}" class="form-control">
+        </label>
+        <p th:errors="${registrationFormDTO.userDetails.displayName}" class="error"></p>
+    </div>
+    <div class="form-group">
+        <label>Email:
+            <input type="email" th:field="${registrationFormDTO.userDetails.emailAddress}"
+                   class="form-control">
+        </label>
+        <p th:errors="${registrationFormDTO.userDetails.emailAddress}" class="error"></p>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Register" />
+</form>
+
+</body>
+</html>

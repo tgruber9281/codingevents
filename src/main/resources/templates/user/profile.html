@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}"></head>
+<body>
+<h1>User Profile</h1>
+<nav th:replace="~{fragments :: navigation}"></nav>
+<div>
+    <p>Name:
+        <span th:text="${user.userDetails.firstName + ' ' + user.userDetails.lastName}"></span></p>
+    <p>Display Name: <span th:text="${user.userDetails.displayName}"></span></p>
+    <p>Email Address: <span th:text="${user.userDetails.emailAddress}"></span></p>
+    <p><a th:href="'/user/edit?id=' + ${user.id}" class="btn btn-success">Edit Profile</a></p>
+</div>
+
+</body>
+</html>
